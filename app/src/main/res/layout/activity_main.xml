@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <com.a1000phone.n5thgroup.yueshijiagroup.view.Banner
+        android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="200dp"></com.a1000phone.n5thgroup.yueshijiagroup.view.Banner>
 
