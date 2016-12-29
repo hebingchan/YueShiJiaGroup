@@ -2,23 +2,43 @@ package com.a1000phone.n5thgroup.yueshijiagroup.view;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.widget.Scroller;
 
-import com.a1000phone.n5thgroup.yueshijiagroup.utils.AppUtils;
+import java.lang.reflect.Field;
 
 /**
  * Created by hebin on 2016/12/29.
  */
 
 public class Banner extends ViewPager {
+    public static final int SCROLL_TO_NEXT = 0x112;
     private Boolean mAutoScroll;
     private int mDuration;
-    private Handler mHandler;
-    private int mActivedPadding;
-    private boolean mIsActived;
-    private boolean mIsUserTouch;
+    private OnItemClickListener mOnItemClickListener = null;
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(final Message msg) {
+            switch (msg.what) {
+                case SCROLL_TO_NEXT:
+                    setCurrentItem(getCurrentItem() + 1);
+                    mHandler.sendEmptyMessageDelayed(SCROLL_TO_NEXT, mDuration);
+                    break;
+            }
+        }
+    };
+
+    public interface OnItemClickListener {
+
+        void onItemClick();
+    }
 
     public Banner(final Context context) {
         this(context, null);
@@ -26,59 +46,103 @@ public class Banner extends ViewPager {
 
     public Banner(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        mHandler = new Handler();
         mDuration = 3000;
         mAutoScroll = false;
-        mIsActived = false;
-        mActivedPadding = AppUtils.dp2Px(10, context);
-        mIsUserTouch = false;
+        setViewPagerScroller();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        if (onItemClickListener != null) {
+            setClickable(true);
+            mOnItemClickListener = onItemClickListener;
+            setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick();
+                    }
+                }
+            });
+        }
+    }
+
+    public void onItemClick() {
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick();
+        }
     }
 
     @Override
-    public boolean onTouchEvent(final MotionEvent ev) {
+    public boolean dispatchTouchEvent(final MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mIsUserTouch = true;
-                if (mIsActived = isActiveArea((int) ev.getX())) {
-                    requestDisallowInterceptTouchEvent(true);
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (mIsActived) {
-                    requestDisallowInterceptTouchEvent(true);
+                if (mAutoScroll) {
+                    stopAutoScroll();
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                mIsActived = false;
-                mIsUserTouch = false;
-                requestDisallowInterceptTouchEvent(false);
+                if (mAutoScroll) {
+                    startAutoScroll();
+                }
                 break;
         }
-        return super.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private void stopAutoScroll() {
+        mHandler.removeMessages(SCROLL_TO_NEXT);
+    }
+
+    private void startAutoScroll() {
+        mHandler.sendEmptyMessageDelayed(SCROLL_TO_NEXT, mDuration);
     }
 
     public void setAutoScroll(boolean autoScroll) {
         if (!mAutoScroll) {
             mAutoScroll = autoScroll;
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (mAutoScroll) {
-                        if (!mIsUserTouch) {
-                            setCurrentItem(getCurrentItem() + 1);
-                        }
-                        mHandler.postDelayed(this, mDuration);
-                    }
-                }
-            }, mDuration);
+            startAutoScroll();
         }
     }
 
-    private boolean isActiveArea(int x) {
-        if (x >= getLeft() + getPaddingLeft() + mActivedPadding
-                && x <= getRight() - getPaddingRight() - mActivedPadding) {
-            return true;
+    private void setViewPagerScroller() {
+        try {
+            Field scrollerField = ViewPager.class.getDeclaredField("mScroller");
+            scrollerField.setAccessible(true);
+            Field interpolatorField = ViewPager.class.getDeclaredField("sInterpolator");
+            interpolatorField.setAccessible(true);
+
+            CustomDurationScroller customDurationScroller = new CustomDurationScroller
+                    (getContext(), new AccelerateDecelerateInterpolator());
+            customDurationScroller.setDuration(500);
+            scrollerField.set(this, customDurationScroller);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return false;
+    }
+
+    public void setDuration(final int duration) {
+        mDuration = duration;
+    }
+
+    private class CustomDurationScroller extends Scroller {
+
+        private int mDuration;
+
+        public CustomDurationScroller(Context context) {
+            super(context);
+        }
+
+        public CustomDurationScroller(Context context, Interpolator interpolator) {
+            super(context, interpolator);
+        }
+
+        public void setDuration(int duration) {
+            mDuration = duration;
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+            super.startScroll(startX, startY, dx, dy, mDuration);
+        }
     }
 }

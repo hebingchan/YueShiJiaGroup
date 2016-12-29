@@ -1,15 +1,19 @@
 package com.a1000phone.n5thgroup.yueshijiagroup.activity;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.a1000phone.n5thgroup.yueshijiagroup.R;
 import com.a1000phone.n5thgroup.yueshijiagroup.adapter.BannerAdapter;
+import com.a1000phone.n5thgroup.yueshijiagroup.listener.BannerListener;
 import com.a1000phone.n5thgroup.yueshijiagroup.view.Banner;
 import com.bumptech.glide.Glide;
 
@@ -23,7 +27,15 @@ public class MainActivity extends BaseActivity {
 
     @InjectView(R.id.banner)
     Banner mBanner;
-    private List<View> mViews;
+    @InjectView(R.id.dot_group)
+    RadioGroup mDotGroup;
+    private String[] urls = {
+            "http://cover.17sysj.com/video_20161228115827735.jpg",
+            "http://cover.17sysj.com/video_20161228111728450.jpg",
+            "http://apps.ifeimo.com/Public/Uploads/Focuse/Flag/5857bd13b830f.jpg",
+            "http://cover.17sysj.com/video_201612270955331083.jpg"
+    };
+    private BannerAdapter mBannerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,19 +46,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
-        mViews = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            ImageView imageView = new ImageView(this);
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-            );
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setLayoutParams(lp);
-            Glide.with(this).load("http://4493bz.1985t.com/uploads/allimg/150127/4-15012G52133.jpg")
-                    .placeholder(R.mipmap.ic_launcher).into(imageView);
-            mViews.add(imageView);
-        }
-        mBanner.setAdapter(new BannerAdapter(mViews));
-        mBanner.setCurrentItem(Integer.MAX_VALUE >> 1);
+        mBannerAdapter = new BannerAdapter(this, urls, mBanner, mDotGroup);
+        mBanner.setAdapter(mBannerAdapter);
+        mBanner.addOnPageChangeListener(new BannerListener(mDotGroup));
+        mBanner.setAutoScroll(true);
+        mBanner.setOnItemClickListener(new Banner.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                Log.e("MainActivity", mBanner.getCurrentItem() + "");
+            }
+        });
     }
 }
