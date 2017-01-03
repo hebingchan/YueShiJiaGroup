@@ -8,6 +8,7 @@ import android.util.TypedValue;
  */
 
 public class AppUtils {
+    public static final String TOKEN = "749a036dc06ae8b3a120848995a9f306";
 
     public static int dp2Px(float value, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value,

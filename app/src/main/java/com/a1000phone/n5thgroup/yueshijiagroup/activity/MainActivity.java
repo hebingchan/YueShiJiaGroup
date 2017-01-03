@@ -13,7 +13,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.frag_mine);
         ButterKnife.inject(this);
     }
 }
