@@ -1,23 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.a1000phone.n5thgroup.yueshijiagroup.view.ExpandableHeaderView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.a1000phone.n5thgroup.yueshijiagroup.view.Banner
-            android:id="@+id/banner"
+
+        <ImageView android:id="@+id/expandableView"
+                   android:layout_width="match_parent"
+                   android:layout_height="230dp"
+                   android:scaleType="centerCrop"
+                   android:src="@drawable/ic_me_bg" android:tag="Header"/>
+
+        <com.a1000phone.n5thgroup.yueshijiagroup.view.MultiTypeImageView
+            android:layout_width="80dp" android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/ic_not_logged" app:style="ROUND"/>
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"></com.a1000phone.n5thgroup.yueshijiagroup.view.Banner>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="230dp"
+            android:orientation="vertical"
+            android:tag="Footer">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:drawableLeft="@mipmap/ic_launcher" android:gravity="center_vertical"
+                      android:text="测试"
+                      android:textSize="24sp"/>
+        </LinearLayout>
 
-        <RadioGroup android:id="@+id/dot_group" android:layout_width="match_parent"
-                    android:layout_height="20dp" android:layout_gravity="bottom"
-                    android:gravity="center" android:orientation="horizontal">
-
-        </RadioGroup>
-    </FrameLayout>
-
-
-</LinearLayout>
+    </RelativeLayout>
+</com.a1000phone.n5thgroup.yueshijiagroup.view.ExpandableHeaderView>

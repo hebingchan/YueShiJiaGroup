@@ -1,4 +1,4 @@
-package com.a1000phone.n5thgroup.yueshijiagroup.fragment;
+package com.a1000phone.n5thgroup.yueshijiagroup.base;
 
 
 import android.support.v4.app.Fragment;

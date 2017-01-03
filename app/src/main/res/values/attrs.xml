@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MultiTypeImageView">
+        <attr name="style" format="enum">
+            <enum name="NORMAL" value="0"/>
+            <enum name="ROUND" value="1"/>
+            <enum name="ROUND_SQUARE" value="3"/>
+            <enum name="POLYGON" value="4"/>
+            <enum name="GEAR" value="5"/>
+        </attr>
+        <attr name="connerRadius" format="dimension"/>
+        <attr name="sideNum" format="integer"/>
+        <attr name="sawToothNum" format="integer"/>
+        <attr name="sawToothHeight" format="dimension"/>
+    </declare-styleable>
+
+</resources>

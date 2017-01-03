@@ -1,4 +1,4 @@
-package com.a1000phone.n5thgroup.yueshijiagroup.activity;
+package com.a1000phone.n5thgroup.yueshijiagroup.base;
 
 import android.support.v7.app.AppCompatActivity;
 
