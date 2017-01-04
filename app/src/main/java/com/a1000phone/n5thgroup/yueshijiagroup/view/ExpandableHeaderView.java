@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 /**
@@ -21,6 +22,7 @@ public class ExpandableHeaderView extends NestedScrollView {
     private ValueAnimator mFootRestoreAnim;
     private ValueAnimator mHeadRestoreAnim;
     private AnimatorSet mRestoreAnimator;
+    private float mDamping;
 
     public ExpandableHeaderView(final Context context) {
         super(context);
@@ -28,6 +30,7 @@ public class ExpandableHeaderView extends NestedScrollView {
 
     public ExpandableHeaderView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
+        mDamping = 0.4f;
     }
 
     @Override
@@ -104,18 +107,18 @@ public class ExpandableHeaderView extends NestedScrollView {
             }
         });
         mRestoreAnimator = new AnimatorSet();
-        mRestoreAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        mRestoreAnimator.setDuration(200);
+        mRestoreAnimator.setInterpolator(new DecelerateInterpolator(0.5f));
+        mRestoreAnimator.setDuration(400);
         mRestoreAnimator.play(mFootRestoreAnim).with(mHeadRestoreAnim);
     }
 
     private void onMove(final MotionEvent ev) {
         int moveY = (int) (ev.getY() - mDown);
         if (mFooter != null) {
-            if (mFooter.getTranslationY() + 0.4f * moveY < 0) {
+            if (mFooter.getTranslationY() + mDamping * moveY < 0) {
                 footerTranslateY(0);
             } else {
-                footerTranslateY(mFooter.getTranslationY() + 0.4f * moveY);
+                footerTranslateY(mFooter.getTranslationY() + mDamping * moveY);
             }
         }
         if (mHeader != null) {

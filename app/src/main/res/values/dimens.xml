@@ -2,4 +2,21 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="mineDrawablePadding">15dp</dimen>
+    <dimen name="viewAllTextSize">13sp</dimen>
+    <dimen name="myOrderTextSize">12sp</dimen>
+    <dimen name="myOrderDrawablePadding">10dp</dimen>
+    <dimen name="myAccountContentPaddingTop">25dp</dimen>
+    <dimen name="myAccountPaddingBottom">30dp</dimen>
+    <dimen name="myAccountDrawablePadding">20dp</dimen>
+    <dimen name="myAccountTextSize">12sp</dimen>
+    <dimen name="serviceCallTextSize">12sp</dimen>
+    <dimen name="mineBottomItemPaddingTop">15dp</dimen>
+    <dimen name="mineBottomItemPaddingBottom">17dp</dimen>
+    <dimen name="myOrderPaddingBottom">15dp</dimen>
+    <dimen name="myOrderPaddingTop">20dp</dimen>
+    <dimen name="myOrderContentPaddingBottom">15dp</dimen>
+    <dimen name="myOrderContentPaddingTop">20dp</dimen>
+    <dimen name="myAccountTitlePaddingBottom">15dp</dimen>
+    <dimen name="myAccountTitlePaddingTop">10dp</dimen>
 </resources>
